@@ -7,7 +7,6 @@ RUN mvn clean package && \
 
 
 FROM eclipse-temurin:17-jre-alpine
-USER roboshop
 RUN addgroup -S roboshop && adduser -S roboshop -G roboshop && \
     chown -R roboshop:roboshop /opt/server
 WORKDIR /opt/server
@@ -17,6 +16,7 @@ ENV CART_ENDPOINT="cart:8080" \
 LABEL com.project="roboshop" \
       component="shipping" \
       created_by="balu"
+USER roboshop
 COPY  --from=build  /opt/server/shipping.jar .
 CMD [ "java","-jar","shipping.jar" ]
 
